@@ -1,12 +1,3 @@
-/* ==========================================================================
-   Saka-Levo Hostel Management System — stylesheet
-   Covers: login.html, sign-up.html, user-dashboard.html,
-           warden-dashboard.html, admin-dashboard.html
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. Design tokens
-   -------------------------------------------------------------------------- */
 :root {
   color-scheme: light;
 
@@ -35,9 +26,6 @@
   --shadow-lg:     0 20px 50px rgba(16, 24, 40, .12);
 }
 
-/* --------------------------------------------------------------------------
-   2. Reset & base
-   -------------------------------------------------------------------------- */
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -64,15 +52,10 @@ a:hover { text-decoration: underline; }
   outline-offset: 2px;
 }
 
-/* Elements hidden via the `hidden` attribute must never be displayed,
-   even when a component sets its own `display` value. */
 [hidden] { display: none !important; }
 
 .muted { color: var(--muted); }
 
-/* --------------------------------------------------------------------------
-   3. Layout helpers
-   -------------------------------------------------------------------------- */
 .container {
   width: 100%;
   max-width: 1180px;
@@ -96,9 +79,7 @@ a:hover { text-decoration: underline; }
   align-items: start;
 }
 
-/* --------------------------------------------------------------------------
-   4. Navbar (student + warden)
-   -------------------------------------------------------------------------- */
+
 .navbar {
   position: sticky;
   top: 0;
@@ -143,7 +124,6 @@ a:hover { text-decoration: underline; }
   overflow: hidden;
 }
 
-/* House icon sits behind the "SL" monogram as a subtle watermark */
 .home-icon {
   position: absolute;
   inset: 0;
@@ -188,8 +168,6 @@ a:hover { text-decoration: underline; }
   background: var(--primary-soft);
   border-color: #c9dbff;
 }
-
-/* Works as both an <a> (student) and a <button> (warden) */
 .profile-chip {
   display: inline-flex;
   align-items: center;
@@ -234,10 +212,6 @@ a:hover { text-decoration: underline; }
   font-size: .95rem;
   box-shadow: 0 6px 14px rgba(47, 111, 237, .28);
 }
-
-/* --------------------------------------------------------------------------
-   5. Page header + search
-   -------------------------------------------------------------------------- */
 .page-header {
   display: flex;
   align-items: flex-end;
@@ -287,9 +261,7 @@ a:hover { text-decoration: underline; }
 }
 .search-bar input:focus { box-shadow: none; }
 
-/* --------------------------------------------------------------------------
-   6. Panels
-   -------------------------------------------------------------------------- */
+
 .panel {
   padding: 20px;
   background: var(--surface);
@@ -313,9 +285,6 @@ a:hover { text-decoration: underline; }
   color: var(--muted);
 }
 
-/* --------------------------------------------------------------------------
-   7. Stat cards (warden overview)
-   -------------------------------------------------------------------------- */
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -358,9 +327,6 @@ a:hover { text-decoration: underline; }
   font-size: .78rem;
 }
 
-/* --------------------------------------------------------------------------
-   8. Tables
-   -------------------------------------------------------------------------- */
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -415,9 +381,6 @@ tbody tr:hover { background: #fafbff; }
 
 td .status { vertical-align: middle; }
 
-/* --------------------------------------------------------------------------
-   9. Status badges
-   -------------------------------------------------------------------------- */
 .status {
   display: inline-flex;
   align-items: center;
@@ -445,9 +408,6 @@ td .status { vertical-align: middle; }
 .status.partial   { background: var(--primary-soft); color: var(--primary-dark); }
 .status.occupied  { background: var(--danger-soft);  color: var(--danger); }
 
-/* --------------------------------------------------------------------------
-   10. Buttons
-   -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -493,9 +453,6 @@ td .status { vertical-align: middle; }
   margin-top: 16px;
 }
 
-/* --------------------------------------------------------------------------
-   11. Forms
-   -------------------------------------------------------------------------- */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -571,7 +528,6 @@ select {
   cursor: pointer;
 }
 
-/* Validation messages */
 .field small {
   font-size: .78rem;
   line-height: 1.4;
@@ -579,7 +535,6 @@ select {
 }
 .field small:empty { display: none; }
 
-/* Password visibility toggle (sits beside the label) */
 .field > button[aria-controls] {
   position: absolute;
   top: 0;
@@ -598,9 +553,8 @@ select {
 .field > button[aria-controls]::after { content: "Show"; }
 .field > button[aria-controls][aria-pressed="true"]::after { content: "Hide"; }
 .field > button[aria-controls]:hover { text-decoration: underline; }
-.field > button[aria-controls] i { display: none; } /* FA icon isn't loaded */
+.field > button[aria-controls] i { display: none; }
 
-/* Terms checkbox row */
 .field > input[type="checkbox"] {
   order: 0;
   flex: none;
@@ -628,7 +582,6 @@ select {
   flex-basis: 100%;
 }
 
-/* Filter toolbar */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -639,10 +592,6 @@ select {
   flex: 1 1 180px;
   max-width: 240px;
 }
-
-/* --------------------------------------------------------------------------
-   12. Lists (complaints, notifications, messages, requests, info)
-   -------------------------------------------------------------------------- */
 .list {
   display: grid;
   gap: 10px;
@@ -680,9 +629,6 @@ form + .list { margin-top: 18px; }
 .list li > .status,
 .list li > .btn { flex: none; }
 
-/* --------------------------------------------------------------------------
-   13. Auth pages (login + sign-up)
-   -------------------------------------------------------------------------- */
 .auth-page {
   min-height: 100vh;
   display: grid;
@@ -761,9 +707,6 @@ form + .list { margin-top: 18px; }
 #formMessage.error   { color: var(--danger); }
 #formMessage.success { color: var(--success); }
 
-/* --------------------------------------------------------------------------
-   14. Modal (warden Profile & Bio)
-   -------------------------------------------------------------------------- */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -867,15 +810,6 @@ form + .list { margin-top: 18px; }
   to   { opacity: 1; transform: none; }
 }
 
-/* --------------------------------------------------------------------------
-   15. Admin dashboard
-   --------------------------------------------------------------------------
-   The admin page uses plain semantic markup with no utility classes.
-   Every rule below is scoped with `:not([class])` (bare <header>/<main>) or a
-   unique ID, so it can't leak into the student, warden or auth pages.
-   -------------------------------------------------------------------------- */
-
-/* ---- 15.1 Top bar & navigation ---- */
 body > header:not([class]) {
   position: sticky;
   top: 0;
@@ -895,8 +829,6 @@ body > header:not([class]) > nav {
   margin: 0 auto;
   padding: 0 20px;
 }
-
-/* Text logo gets a gradient "SL" mark via ::before */
 #logo {
   position: relative;
   display: inline-flex;
@@ -928,7 +860,6 @@ body > header:not([class]) > nav {
 }
 #logo:hover { text-decoration: none; }
 
-/* Primary nav links */
 body > header:not([class]) > nav > ul {
   display: flex;
   align-items: center;
@@ -954,7 +885,6 @@ body > header:not([class]) > nav > ul > li > a:hover {
   text-decoration: none;
 }
 
-/* Profile <details> menu */
 #profile {
   position: relative;
   margin-left: auto;
@@ -978,7 +908,6 @@ body > header:not([class]) > nav > ul > li > a:hover {
 #profile > summary::-webkit-details-marker { display: none; }
 #profile > summary::marker { content: ""; }
 
-/* Avatar chip */
 #profile > summary::before {
   content: "AD";
   display: inline-flex;
@@ -994,7 +923,6 @@ body > header:not([class]) > nav > ul > li > a:hover {
   letter-spacing: .04em;
 }
 
-/* Caret */
 #profile > summary::after {
   content: "";
   width: 7px;
@@ -1015,7 +943,6 @@ body > header:not([class]) > nav > ul > li > a:hover {
   border-color: #c9dbff;
 }
 
-/* Dropdown panel */
 #profile > ul {
   position: absolute;
   top: calc(100% + 8px);
@@ -1044,7 +971,6 @@ body > header:not([class]) > nav > ul > li > a:hover {
   text-decoration: none;
 }
 
-/* ---- 15.2 Main content ---- */
 body > main:not([class]) {
   max-width: 1180px;
   margin: 0 auto;
@@ -1063,7 +989,6 @@ body > main:not([class]) > p {
   font-size: .92rem;
 }
 
-/* Sections become panels; the <hr> separators are redundant */
 body > main:not([class]) > hr { display: none; }
 
 body > main:not([class]) > section {
@@ -1093,7 +1018,6 @@ body > main:not([class]) > section > p {
   font-size: .88rem;
 }
 
-/* ---- 15.3 Summary cards (#summary) ---- */
 #summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -1129,7 +1053,6 @@ body > main:not([class]) > section > p {
   color: var(--text);
 }
 
-/* ---- 15.4 Tables ---- */
 body > main:not([class]) > section > table { margin-top: 14px; }
 
 body > main:not([class]) td > a {
@@ -1139,7 +1062,6 @@ body > main:not([class]) td > a {
   font-weight: 600;
 }
 
-/* Inline action forms inside table cells */
 body > main:not([class]) td form {
   display: inline-flex;
   flex-wrap: wrap;
@@ -1147,7 +1069,6 @@ body > main:not([class]) td form {
   margin: 4px 0 0;
 }
 
-/* ---- 15.5 Buttons ---- */
 body > main:not([class]) button {
   display: inline-flex;
   align-items: center;
@@ -1168,7 +1089,6 @@ body > main:not([class]) button {
 body > main:not([class]) button:hover  { background: var(--primary-dark); }
 body > main:not([class]) button:active { transform: translateY(1px); }
 
-/* "Clear" reset buttons */
 body > main:not([class]) button[type="reset"] {
   background: var(--surface);
   color: var(--primary-dark);
@@ -1179,7 +1099,6 @@ body > main:not([class]) button[type="reset"]:hover {
   border-color: #c9dbff;
 }
 
-/* Compact buttons inside table cells */
 body > main:not([class]) td form button {
   padding: 5px 11px;
   border: 1px solid var(--line);
@@ -1189,7 +1108,6 @@ body > main:not([class]) td form button {
   font-size: .76rem;
 }
 
-/* Action variants — keyed on the button's `value` attribute */
 body > main:not([class]) button[value="suspend"],
 body > main:not([class]) button[value="reject"] {
   background: var(--danger-soft);
@@ -1213,7 +1131,6 @@ body > main:not([class]) button[value="approve"] {
 }
 body > main:not([class]) button[value="approve"]:hover { background: #ccefdf; }
 
-/* ---- 15.6 Filter / search forms ---- */
 body > main:not([class]) > section > form {
   display: flex;
   flex-wrap: wrap;
@@ -1240,7 +1157,6 @@ body > main:not([class]) > section > form > select {
   min-width: 0;
 }
 
-/* "+ Add new user" link */
 #users > p:first-of-type a {
   display: inline-flex;
   padding: 8px 14px;
@@ -1252,7 +1168,6 @@ body > main:not([class]) > section > form > select {
 }
 #users > p:first-of-type a:hover { text-decoration: none; background: #d8e6ff; }
 
-/* ---- 15.7 Pagination ---- */
 body > main:not([class]) > section > nav {
   display: flex;
   align-items: center;
@@ -1279,7 +1194,6 @@ body > main:not([class]) > section > nav a:hover {
   text-decoration: none;
 }
 
-/* ---- 15.8 Footer ---- */
 body > footer {
   max-width: 1180px;
   margin: 0 auto;
@@ -1290,15 +1204,11 @@ body > footer {
 }
 body > footer p { margin: 0; }
 
-/* --------------------------------------------------------------------------
-   16. Responsive
-   -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
   .split { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 860px) {
-  /* Admin nav: logo + profile on row 1, links on a scrollable row 2 */
   body > header:not([class]) > nav {
     gap: 10px;
     padding: 10px 20px;
@@ -1344,7 +1254,6 @@ body > footer p { margin: 0; }
 
   .auth-card { padding: 26px 20px; }
 
-  /* Warden modal */
   .modal-backdrop { padding: 12px; }
   .modal-card {
     max-width: none;
@@ -1359,11 +1268,8 @@ body > footer p { margin: 0; }
   .stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
   .stat .value { font-size: 1.4rem; }
 
-  /* ---- Admin on small screens ---- */
   body > main:not([class]) { padding: 20px 16px 40px; }
   body > main:not([class]) > section { padding: 16px; }
-
-  /* Horizontal-scroll tables without a wrapper element */
   body > main:not([class]) table {
     display: block;
     overflow-x: auto;
@@ -1375,7 +1281,6 @@ body > footer p { margin: 0; }
   #summary { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
   #summary > li > span { font-size: 1.3rem; }
 
-  /* Stack filter forms: each label sits above its control */
   body > main:not([class]) > section > form {
     flex-direction: column;
     align-items: stretch;
