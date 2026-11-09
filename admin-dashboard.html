@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Saka-Levo Student Hostel Management System</title>
+
+  
+</head>
+
+<body>
+
+  <!-- ============ NAVIGATION BAR: logo, profile ============ -->
+  <header>
+    <nav aria-label="Main navigation">
+      <!-- TODO: replace with <img src="images/logo.png" alt="Saka-Levo logo"> -->
+      <a href="admin-dashboard.html" id="logo">Saka-Levo</a>
+
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#users">Manage Users</a></li>
+        <li><a href="#requests">Requests</a></li>
+        <li><a href="#reports">Reports</a></li>
+      </ul>
+
+      <!-- Profile menu (works without JavaScript) -->
+      <details id="profile">
+        <summary>Profile</summary>
+        <ul>
+          <li><a href="admin-profile.html">My profile</a></li>
+          <li><a href="admin-settings.html">Settings</a></li>
+          <li><a href="login.html">Log out</a></li> <!-- TODO: point to logout.php -->
+        </ul>
+      </details>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Administrator Dashboard</h1>
+    <p>Welcome, Admin. Oversee hostel operations, manage accounts, verify requests and generate reports.</p>
+
+    <!-- ============ 1. OVERSEE ALL HOSTEL OPERATIONS ============ -->
+    <section id="overview" aria-labelledby="overview-heading">
+      <h2 id="overview-heading">Hostel Operations Overview</h2>
+
+      <!-- Summary cards. TODO: fill values from MySQL -->
+      <ul id="summary">
+        <li><strong>Total hostels:</strong> <span>0</span></li>
+        <li><strong>Total rooms:</strong> <span>0</span></li>
+        <li><strong>Occupied rooms:</strong> <span>0</span></li>
+        <li><strong>Occupancy rate:</strong> <span>0%</span></li>
+        <li><strong>Pending requests:</strong> <span>0</span></li>
+        <li><strong>Registered users:</strong> <span>0</span></li>
+      </ul>
+
+      <h3>All Hostels</h3>
+      <table id="hostels-table">
+        <caption>Hostels and their current occupancy</caption>
+        <thead>
+          <tr>
+            <th scope="col">Hostel</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Warden</th>
+            <th scope="col">Total rooms</th>
+            <th scope="col">Occupied</th>
+            <th scope="col">Available</th>
+            <th scope="col">Occupancy</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- TODO: generate rows from the database. Sample row below. -->
+          <tr>
+            <td>Sample Hostel A</td>
+            <td>Male</td>
+            <td>Mr. Sample Warden</td>
+            <td>100</td>
+            <td>80</td>
+            <td>20</td>
+            <td>80%</td>
+            <td>
+              <a href="hostel-details.html?id=1">View</a>
+              <a href="hostel-edit.html?id=1">Edit</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr>
+
+    <!-- ============ 2. MANAGE USER ACCOUNTS ============ -->
+    <section id="users" aria-labelledby="users-heading">
+      <h2 id="users-heading">Manage User Accounts</h2>
+
+      <!-- Search and filter. TODO: wire to PHP or JavaScript -->
+      <form action="#" method="get" id="user-search-form">
+        <label for="user-search">Search users</label>
+        <input type="search" id="user-search" name="q" placeholder="Name or email">
+
+        <label for="user-role">Role</label>
+        <select id="user-role" name="role">
+          <option value="">All roles</option>
+          <option value="student">Student</option>
+          <option value="warden">Warden</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <label for="user-status">Status</label>
+        <select id="user-status" name="status">
+          <option value="">All statuses</option>
+          <option value="active">Active</option>
+          <option value="suspended">Suspended</option>
+        </select>
+
+        <button type="submit">Search</button>
+        <button type="reset">Clear</button>
+      </form>
+
+      <p><a href="add-user.html">+ Add new user</a></p>
+
+      <table id="users-table">
+        <caption>Registered users</caption>
+        <thead>
+          <tr>
+            <th scope="col">Full name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Sex</th>
+            <th scope="col">Role</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- TODO: generate rows from the database. Sample rows below. -->
+          <tr>
+            <td>Sample Student</td>
+            <td>student@school.edu</td>
+            <td>0999 000 000</td>
+            <td>Female</td>
+            <td>Student</td>
+            <td>Active</td>
+            <td>
+              <a href="user-view.html?id=1">View</a>
+              <a href="user-edit.html?id=1">Edit</a>
+              <!-- TODO: confirm before suspending or deleting; handle in PHP -->
+              <form action="#" method="post">
+                <input type="hidden" name="user_id" value="1">
+                <button type="submit" name="action" value="suspend">Suspend</button>
+                <button type="submit" name="action" value="delete">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <tr>
+            <td>Sample Warden</td>
+            <td>warden@school.edu</td>
+            <td>0888 000 000</td>
+            <td>Male</td>
+            <td>Warden</td>
+            <td>Active</td>
+            <td>
+              <a href="user-view.html?id=2">View</a>
+              <a href="user-edit.html?id=2">Edit</a>
+              <form action="#" method="post">
+                <input type="hidden" name="user_id" value="2">
+                <button type="submit" name="action" value="suspend">Suspend</button>
+                <button type="submit" name="action" value="delete">Delete</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- TODO: pagination -->
+      <nav aria-label="User list pages">
+        <a href="#">Previous</a>
+        <span>Page 1 of 1</span>
+        <a href="#">Next</a>
+      </nav>
+    </section>
+
+    <hr>
+
+    <!-- ============ 3. VERIFY REQUESTS ============ -->
+    <section id="requests" aria-labelledby="requests-heading">
+      <h2 id="requests-heading">Verify Requests</h2>
+      <p>Room requests and room change requests waiting for review.</p>
+
+      <form action="#" method="get" id="request-filter-form">
+        <label for="request-type">Request type</label>
+        <select id="request-type" name="type">
+          <option value="">All types</option>
+          <option value="new-room">New room</option>
+          <option value="room-change">Room change</option>
+          <option value="account">Account verification</option>
+        </select>
+
+        <label for="request-status">Status</label>
+        <select id="request-status" name="status">
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+
+        <button type="submit">Filter</button>
+      </form>
+
+      <table id="requests-table">
+        <caption>Requests</caption>
+        <thead>
+          <tr>
+            <th scope="col">Request ID</th>
+            <th scope="col">Student</th>
+            <th scope="col">Type</th>
+            <th scope="col">Hostel / Room</th>
+            <th scope="col">Date submitted</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- TODO: generate rows from the database. Sample row below. -->
+          <tr>
+            <td>#001</td>
+            <td>Sample Student</td>
+            <td>Room change</td>
+            <td>Sample Hostel A / Room 12</td>
+            <td>2026-11-09</td>
+            <td>Pending</td>
+            <td>
+              <a href="request-details.html?id=1">Details</a>
+              <form action="#" method="post">
+                <input type="hidden" name="request_id" value="1">
+                <button type="submit" name="decision" value="approve">Approve</button>
+                <button type="submit" name="decision" value="reject">Reject</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr>
+
+    <!-- ============ 4. GENERATE REPORTS ============ -->
+    <section id="reports" aria-labelledby="reports-heading">
+      <h2 id="reports-heading">Generate Reports</h2>
+
+      <!-- TODO: handle in generate-report.php (output on screen, PDF or CSV) -->
+      <form action="generate-report.php" method="post" id="report-form">
+        <label for="report-type">Report type</label>
+        <select id="report-type" name="report_type" required>
+          <option value="">Select a report</option>
+          <option value="occupancy">Occupancy report</option>
+          <option value="room-assignments">Room assignments</option>
+          <option value="requests-summary">Requests summary</option>
+          <option value="user-accounts">User accounts</option>
+        </select>
+
+        <label for="report-hostel">Hostel</label>
+        <select id="report-hostel" name="hostel_id">
+          <option value="">All hostels</option>
+          <!-- TODO: load hostel names from the database -->
+          <option value="1">Sample Hostel A</option>
+        </select>
+
+        <label for="report-from">From</label>
+        <input type="date" id="report-from" name="from_date">
+
+        <label for="report-to">To</label>
+        <input type="date" id="report-to" name="to_date">
+
+        <label for="report-format">Format</label>
+        <select id="report-format" name="format">
+          <option value="screen">View on screen</option>
+          <option value="pdf">PDF</option>
+          <option value="csv">CSV</option>
+        </select>
+
+        <button type="submit">Generate report</button>
+      </form>
+
+      <h3>Recent Reports</h3>
+      <table id="reports-table">
+        <caption>Previously generated reports</caption>
+        <thead>
+          <tr>
+            <th scope="col">Report</th>
+            <th scope="col">Generated on</th>
+            <th scope="col">Generated by</th>
+            <th scope="col">Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- TODO: list reports from the database. Sample row below. -->
+          <tr>
+            <td>Occupancy report</td>
+            <td>2026-11-09</td>
+            <td>Admin</td>
+            <td><a href="#">Download</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Saka-Levo Student Hostel Management System</p>
+  </footer>
+
+  <!-- <script src="js/admin.js"></script> -->
+</body>
+</html>
