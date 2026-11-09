@@ -1,0 +1,1398 @@
+/* ==========================================================================
+   Saka-Levo Hostel Management System — stylesheet
+   Covers: login.html, sign-up.html, user-dashboard.html,
+           warden-dashboard.html, admin-dashboard.html
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --bg:            #f4f6fb;
+  --surface:       #ffffff;
+  --surface-alt:   #fbfcfe;
+
+  --text:          #1b2333;
+  --muted:         #64708a;
+  --line:          #e2e7f0;
+
+  --primary:       #2f6fed;
+  --primary-dark:  #1e56c9;
+  --primary-soft:  #e8f0ff;
+
+  --success:       #12805c;
+  --success-soft:  #e0f5ec;
+  --warn:          #a06400;
+  --warn-soft:     #fff2d9;
+  --danger:        #c0392b;
+  --danger-soft:   #fdecea;
+
+  --radius:        14px;
+  --radius-sm:     10px;
+  --shadow:        0 1px 2px rgba(16, 24, 40, .06), 0 8px 24px rgba(16, 24, 40, .06);
+  --shadow-lg:     0 20px 50px rgba(16, 24, 40, .12);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { line-height: 1.25; letter-spacing: -.01em; }
+p { margin: 0 0 12px; }
+a { color: var(--primary-dark); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+:focus-visible {
+  outline: 3px solid var(--primary-soft);
+  outline-offset: 2px;
+}
+
+/* Elements hidden via the `hidden` attribute must never be displayed,
+   even when a component sets its own `display` value. */
+[hidden] { display: none !important; }
+
+.muted { color: var(--muted); }
+
+/* --------------------------------------------------------------------------
+   3. Layout helpers
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.page {
+  padding-top: 26px;
+  padding-bottom: 56px;
+}
+
+.page > .split,
+.page > .panel { margin-bottom: 20px; }
+.page > *:last-child { margin-bottom: 0; }
+
+.split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   4. Navbar (student + warden)
+   -------------------------------------------------------------------------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 0 rgba(16, 24, 40, .02);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 68px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.logo-mark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(140deg, var(--primary), #6f4df6);
+  box-shadow: 0 6px 14px rgba(47, 111, 237, .28);
+  overflow: hidden;
+}
+
+/* House icon sits behind the "SL" monogram as a subtle watermark */
+.home-icon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  fill: #fff;
+  opacity: .18;
+  pointer-events: none;
+}
+
+.logo-text {
+  position: relative;
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .03em;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.icon-btn:hover {
+  color: var(--primary-dark);
+  background: var(--primary-soft);
+  border-color: #c9dbff;
+}
+
+/* Works as both an <a> (student) and a <button> (warden) */
+.profile-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px 4px 4px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: .88rem;
+  font-weight: 600;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+.profile-chip:hover {
+  text-decoration: none;
+  background: var(--primary-soft);
+  border-color: #c9dbff;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--primary), #6f4df6);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.avatar-lg {
+  width: 48px;
+  height: 48px;
+  font-size: .95rem;
+  box-shadow: 0 6px 14px rgba(47, 111, 237, .28);
+}
+
+/* --------------------------------------------------------------------------
+   5. Page header + search
+   -------------------------------------------------------------------------- */
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.page-header h2 {
+  margin: 0 0 4px;
+  font-size: 1.45rem;
+}
+
+.page-header .muted {
+  margin: 0;
+  font-size: .9rem;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 300px;
+  max-width: 420px;
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--muted);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.search-bar:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+.search-bar input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: var(--text);
+  outline: none;
+}
+.search-bar input:focus { box-shadow: none; }
+
+/* --------------------------------------------------------------------------
+   6. Panels
+   -------------------------------------------------------------------------- */
+.panel {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.panel h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+}
+
+.panel > .meta,
+.panel h3 + .meta {
+  margin: 0 0 14px;
+}
+
+.meta {
+  font-size: .82rem;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   7. Stat cards (warden overview)
+   -------------------------------------------------------------------------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.panel h3 + .stats { margin-top: 14px; }
+
+.stat {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-alt);
+  transition: border-color .15s ease, transform .12s ease, box-shadow .15s ease;
+}
+.stat:hover {
+  border-color: #c9dbff;
+  box-shadow: 0 6px 16px rgba(47, 111, 237, .10);
+}
+
+.stat .label {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat .value {
+  margin: 4px 0 2px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.stat .meta {
+  margin: 0;
+  font-size: .78rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. Tables
+   -------------------------------------------------------------------------- */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+
+caption {
+  caption-side: top;
+  padding: 0 0 10px;
+  text-align: left;
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+thead th {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: #f7f9fc;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+tbody th,
+tbody td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+tbody th {
+  width: 42%;
+  text-align: left;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+tbody tr:last-child th,
+tbody tr:last-child td { border-bottom: 0; }
+
+tbody tr:hover { background: #fafbff; }
+
+td .status { vertical-align: middle; }
+
+/* --------------------------------------------------------------------------
+   9. Status badges
+   -------------------------------------------------------------------------- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #eef1f7;
+  color: var(--muted);
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .85;
+}
+
+.status.available { background: var(--success-soft); color: var(--success); }
+.status.pending   { background: var(--warn-soft);    color: var(--warn); }
+.status.partial   { background: var(--primary-soft); color: var(--primary-dark); }
+.status.occupied  { background: var(--danger-soft);  color: var(--danger); }
+
+/* --------------------------------------------------------------------------
+   10. Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .06s ease;
+}
+.btn:hover { background: var(--primary-dark); text-decoration: none; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--primary-dark);
+  border-color: var(--line);
+}
+.btn-secondary:hover {
+  background: var(--primary-soft);
+  border-color: #c9dbff;
+}
+
+.btn-sm { padding: 7px 14px; font-size: .82rem; border-radius: 9px; }
+.btn-block { width: 100%; }
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   11. Forms
+   -------------------------------------------------------------------------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.form-grid .field.full { grid-column: 1 / -1; }
+
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field label {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="search"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  line-height: 1.4;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+input::placeholder,
+textarea::placeholder { color: #9aa4b8; }
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+
+input[aria-invalid="true"],
+input.is-invalid {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 4px var(--danger-soft);
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 38px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364708a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+  cursor: pointer;
+}
+
+/* Validation messages */
+.field small {
+  font-size: .78rem;
+  line-height: 1.4;
+  color: var(--danger);
+}
+.field small:empty { display: none; }
+
+/* Password visibility toggle (sits beside the label) */
+.field > button[aria-controls] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 20px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--primary-dark);
+  font: inherit;
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+.field > button[aria-controls]::after { content: "Show"; }
+.field > button[aria-controls][aria-pressed="true"]::after { content: "Hide"; }
+.field > button[aria-controls]:hover { text-decoration: underline; }
+.field > button[aria-controls] i { display: none; } /* FA icon isn't loaded */
+
+/* Terms checkbox row */
+.field > input[type="checkbox"] {
+  order: 0;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+.field:has(> input[type="checkbox"]) {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.field:has(> input[type="checkbox"]) > label {
+  order: 1;
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+}
+.field:has(> input[type="checkbox"]) > small {
+  order: 2;
+  flex-basis: 100%;
+}
+
+/* Filter toolbar */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.field.small {
+  flex: 1 1 180px;
+  max-width: 240px;
+}
+
+/* --------------------------------------------------------------------------
+   12. Lists (complaints, notifications, messages, requests, info)
+   -------------------------------------------------------------------------- */
+.list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+form + .list { margin-top: 18px; }
+
+.list li {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-alt);
+}
+
+.list li > div { flex: 1 1 auto; min-width: 0; }
+
+.list li strong {
+  display: block;
+  font-size: .92rem;
+  font-weight: 600;
+}
+
+.list .meta {
+  margin: 2px 0 0;
+  font-size: .8rem;
+}
+
+.list li > .status,
+.list li > .btn { flex: none; }
+
+/* --------------------------------------------------------------------------
+   13. Auth pages (login + sign-up)
+   -------------------------------------------------------------------------- */
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+  background:
+    radial-gradient(1000px 520px at 50% -10%, #e3ecff 0%, rgba(227, 236, 255, 0) 65%),
+    var(--bg);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  padding: 32px 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow-lg);
+}
+.auth-card.narrow { max-width: 430px; }
+
+.auth-card .brand {
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.auth-card .brand h1 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.auth-card header {
+  margin-bottom: 22px;
+  text-align: center;
+}
+.auth-card header h1 {
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+}
+.auth-card header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.subtitle {
+  margin: 0 0 22px;
+  text-align: center;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.auth-card form { margin-top: 6px; }
+
+.auth-card .btn-block,
+#signupButton {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.auth-links,
+.auth-link {
+  margin-top: 16px;
+  text-align: center;
+  font-size: .88rem;
+  color: var(--muted);
+}
+.auth-links a,
+.auth-link a { font-weight: 600; }
+
+#formMessage {
+  margin: 0;
+  font-size: .85rem;
+  text-align: center;
+}
+#formMessage:empty { display: none; }
+#formMessage.error   { color: var(--danger); }
+#formMessage.success { color: var(--success); }
+
+/* --------------------------------------------------------------------------
+   14. Modal (warden Profile & Bio)
+   -------------------------------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(16, 24, 40, .55);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  animation: modal-fade .18s ease-out;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 620px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow-lg);
+  animation: modal-rise .22s ease-out;
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.modal-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.modal-profile-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.modal-subtitle {
+  margin: 2px 0 0;
+  font-size: .82rem;
+  color: var(--muted);
+}
+
+.modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.modal-close:hover {
+  background: var(--danger-soft);
+  border-color: #f5c6c0;
+  color: var(--danger);
+}
+
+.bio-form { padding: 20px 22px; }
+
+.form-section-title {
+  margin: 0 0 14px;
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.modal-actions {
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modal-rise {
+  from { opacity: 0; transform: translateY(14px) scale(.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   15. Admin dashboard
+   --------------------------------------------------------------------------
+   The admin page uses plain semantic markup with no utility classes.
+   Every rule below is scoped with `:not([class])` (bare <header>/<main>) or a
+   unique ID, so it can't leak into the student, warden or auth pages.
+   -------------------------------------------------------------------------- */
+
+/* ---- 15.1 Top bar & navigation ---- */
+body > header:not([class]) {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 0 rgba(16, 24, 40, .02);
+}
+
+body > header:not([class]) > nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  max-width: 1180px;
+  min-height: 68px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Text logo gets a gradient "SL" mark via ::before */
+#logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding-left: 50px;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  text-decoration: none;
+}
+#logo::before {
+  content: "SL";
+  position: absolute;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(140deg, var(--primary), #6f4df6);
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .03em;
+  box-shadow: 0 6px 14px rgba(47, 111, 237, .28);
+}
+#logo:hover { text-decoration: none; }
+
+/* Primary nav links */
+body > header:not([class]) > nav > ul {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body > header:not([class]) > nav > ul > li > a {
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 9px;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 600;
+  transition: color .15s ease, background .15s ease;
+}
+body > header:not([class]) > nav > ul > li > a:hover {
+  color: var(--primary-dark);
+  background: var(--primary-soft);
+  text-decoration: none;
+}
+
+/* Profile <details> menu */
+#profile {
+  position: relative;
+  margin-left: auto;
+}
+
+#profile > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px 4px 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: .88rem;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+#profile > summary::-webkit-details-marker { display: none; }
+#profile > summary::marker { content: ""; }
+
+/* Avatar chip */
+#profile > summary::before {
+  content: "AD";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--primary), #6f4df6);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+/* Caret */
+#profile > summary::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-top: -4px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  color: var(--muted);
+  transform: rotate(45deg);
+  transition: transform .15s ease;
+}
+#profile[open] > summary::after {
+  margin-top: 4px;
+  transform: rotate(-135deg);
+}
+#profile > summary:hover {
+  background: var(--primary-soft);
+  border-color: #c9dbff;
+}
+
+/* Dropdown panel */
+#profile > ul {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 40;
+  min-width: 190px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+}
+#profile > ul a {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: .88rem;
+  font-weight: 500;
+}
+#profile > ul a:hover {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
+/* ---- 15.2 Main content ---- */
+body > main:not([class]) {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+}
+
+body > main:not([class]) > h1 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+}
+
+body > main:not([class]) > p {
+  max-width: 72ch;
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+/* Sections become panels; the <hr> separators are redundant */
+body > main:not([class]) > hr { display: none; }
+
+body > main:not([class]) > section {
+  padding: 20px;
+  margin-bottom: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+body > main:not([class]) > section:last-of-type { margin-bottom: 0; }
+
+body > main:not([class]) > section > h2 {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+
+body > main:not([class]) > section > h3 {
+  margin: 22px 0 10px;
+  font-size: .95rem;
+}
+
+body > main:not([class]) > section > p {
+  max-width: 72ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+/* ---- 15.3 Summary cards (#summary) ---- */
+#summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 16px 0 4px;
+  padding: 0;
+  list-style: none;
+}
+
+#summary > li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-alt);
+}
+
+#summary > li > strong {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+#summary > li > span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+/* ---- 15.4 Tables ---- */
+body > main:not([class]) > section > table { margin-top: 14px; }
+
+body > main:not([class]) td > a {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: .84rem;
+  font-weight: 600;
+}
+
+/* Inline action forms inside table cells */
+body > main:not([class]) td form {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 0;
+}
+
+/* ---- 15.5 Buttons ---- */
+body > main:not([class]) button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+  font: inherit;
+  font-size: .86rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .06s ease;
+}
+body > main:not([class]) button:hover  { background: var(--primary-dark); }
+body > main:not([class]) button:active { transform: translateY(1px); }
+
+/* "Clear" reset buttons */
+body > main:not([class]) button[type="reset"] {
+  background: var(--surface);
+  color: var(--primary-dark);
+  border-color: var(--line);
+}
+body > main:not([class]) button[type="reset"]:hover {
+  background: var(--primary-soft);
+  border-color: #c9dbff;
+}
+
+/* Compact buttons inside table cells */
+body > main:not([class]) td form button {
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .76rem;
+}
+
+/* Action variants — keyed on the button's `value` attribute */
+body > main:not([class]) button[value="suspend"],
+body > main:not([class]) button[value="reject"] {
+  background: var(--danger-soft);
+  border-color: #f5c6c0;
+  color: var(--danger);
+}
+body > main:not([class]) button[value="suspend"]:hover,
+body > main:not([class]) button[value="reject"]:hover { background: #fbdbd6; }
+
+body > main:not([class]) button[value="delete"] {
+  background: var(--danger);
+  border-color: transparent;
+  color: #fff;
+}
+body > main:not([class]) button[value="delete"]:hover { background: #a93226; }
+
+body > main:not([class]) button[value="approve"] {
+  background: var(--success-soft);
+  border-color: #bfe8d6;
+  color: var(--success);
+}
+body > main:not([class]) button[value="approve"]:hover { background: #ccefdf; }
+
+/* ---- 15.6 Filter / search forms ---- */
+body > main:not([class]) > section > form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  padding: 16px;
+  margin: 16px 0 18px;
+  background: var(--surface-alt);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+body > main:not([class]) > section > form > label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+body > main:not([class]) > section > form > input,
+body > main:not([class]) > section > form > select {
+  width: auto;
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+/* "+ Add new user" link */
+#users > p:first-of-type a {
+  display: inline-flex;
+  padding: 8px 14px;
+  border-radius: 9px;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-size: .84rem;
+  font-weight: 700;
+}
+#users > p:first-of-type a:hover { text-decoration: none; background: #d8e6ff; }
+
+/* ---- 15.7 Pagination ---- */
+body > main:not([class]) > section > nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: .86rem;
+}
+
+body > main:not([class]) > section > nav a {
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  font-size: .84rem;
+  font-weight: 600;
+  transition: background .15s ease, border-color .15s ease;
+}
+body > main:not([class]) > section > nav a:hover {
+  background: var(--primary-soft);
+  border-color: #c9dbff;
+  text-decoration: none;
+}
+
+/* ---- 15.8 Footer ---- */
+body > footer {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 20px 40px;
+  color: var(--muted);
+  font-size: .82rem;
+  text-align: center;
+}
+body > footer p { margin: 0; }
+
+/* --------------------------------------------------------------------------
+   16. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 860px) {
+  /* Admin nav: logo + profile on row 1, links on a scrollable row 2 */
+  body > header:not([class]) > nav {
+    gap: 10px;
+    padding: 10px 20px;
+  }
+  body > header:not([class]) > nav > ul {
+    order: 3;
+    flex-basis: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+  }
+  body > header:not([class]) > nav > ul > li > a { white-space: nowrap; }
+}
+
+@media (max-width: 640px) {
+  .page { padding-top: 18px; padding-bottom: 40px; }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-bar {
+    flex: 1 1 auto;
+    max-width: none;
+  }
+
+  .form-grid { grid-template-columns: minmax(0, 1fr); }
+  .field.small { max-width: none; }
+
+  .panel { padding: 16px; }
+
+  .nav-inner { min-height: 60px; }
+  .profile-chip span:last-child { display: none; }
+  .profile-chip { padding: 4px; }
+
+  .table-wrap table:has(thead) { min-width: 540px; }
+
+  .list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .auth-card { padding: 26px 20px; }
+
+  /* Warden modal */
+  .modal-backdrop { padding: 12px; }
+  .modal-card {
+    max-width: none;
+    max-height: calc(100vh - 24px);
+    border-radius: 16px;
+  }
+  .modal-header { padding: 16px; }
+  .bio-form { padding: 16px; }
+  .modal-actions { justify-content: stretch; }
+  .modal-actions .btn { flex: 1 1 140px; }
+
+  .stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .stat .value { font-size: 1.4rem; }
+
+  /* ---- Admin on small screens ---- */
+  body > main:not([class]) { padding: 20px 16px 40px; }
+  body > main:not([class]) > section { padding: 16px; }
+
+  /* Horizontal-scroll tables without a wrapper element */
+  body > main:not([class]) table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  body > main:not([class]) caption { white-space: normal; }
+
+  #summary { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  #summary > li > span { font-size: 1.3rem; }
+
+  /* Stack filter forms: each label sits above its control */
+  body > main:not([class]) > section > form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  body > main:not([class]) > section > form > label {
+    white-space: normal;
+    margin-top: 6px;
+  }
+  body > main:not([class]) > section > form > input,
+  body > main:not([class]) > section > form > select {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  body > main:not([class]) > section > form > button { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
