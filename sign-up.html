@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> Saka-Levo Hostel</title>
+
+    <!-- Link to your existing external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- External JavaScript -->
+    <script src="js/signup.js" defer></script>
+</head>
+
+<body class="auth-page">
+
+    <main class="auth-card narrow">
+        
+
+            <header>
+                <h1 id="signup-heading">Create Your Account</h1>
+                <p>Welcome to Saka-Levo Hostel. Sign up to get started.</p>
+            </header>
+
+            <form class="form-grid" id="signupForm" novalidate>
+
+                <!-- Full Name -->
+                <div class="field full">
+                    <label for="fullName">Full Name</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+                    <small id="fullNameError" aria-live="polite"></small>
+                </div>
+
+                <!-- Email Address -->
+                <div class="field full">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required
+                    >
+                    <small id="emailError" aria-live="polite"></small>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="field full">
+                    <label for="phone">Phone Number</label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        autocomplete="tel"
+                        required
+                    >
+                    <small id="phoneError" aria-live="polite"></small>
+                </div>
+
+                <!-- Username -->
+                <div class="field full">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter username"
+                        autocomplete="username"
+                        required
+                    >
+                    <small id="usernameError" aria-live="polite"></small>
+                </div>
+
+                <!-- Password -->
+                <div class="field full">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button
+                        <button
+    type="button"
+    id="togglePassword"
+    class="password-toggle"
+    aria-label="Show password"
+    aria-controls="password"
+    aria-pressed="false"
+>
+    <i class="fa-solid fa-eye"></i>
+</button>
+                        
+                    </button>
+
+                    <small id="passwordError" aria-live="polite"></small>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="field full">
+                    <label for="confirmPassword">Confirm Password</label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Confirm your password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="toggleConfirmPassword"
+                        aria-controls="confirmPassword"
+                        aria-pressed="false"
+                    >
+                        
+                    </button>
+
+                    <small id="confirmPasswordError" aria-live="polite"></small>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="field full">
+                  
+
+                    <label for="terms">
+                        I agree to the Terms and Conditions.
+                    </label>
+                      <input
+                        type="checkbox"
+                        id="terms"
+                        name="terms"
+                        required
+                    >
+
+                    <small id="termsError" aria-live="polite"></small>
+                </div>
+
+                <!-- General Message -->
+                <p id="formMessage" role="status" aria-live="polite"></p>
+
+                <!-- Sign Up Button -->
+                 <div>
+                <button type="submit" id="signupButton" class="btn">
+                    Sign Up
+                </button>
+                </div>
+
+            </form>
+
+            <!-- Login Link -->
+            <p class="auth-link">
+                Already have an account?
+                <a href="login.html">Login here</a>
+            </p>
+
+        </section>
+    </main>
+
+</body>
+</html>
