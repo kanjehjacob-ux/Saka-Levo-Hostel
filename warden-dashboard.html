@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warden Dashboard - Saka-Levo Hostel Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container nav-inner">
+            <div class="brand">
+                <span class="logo-mark" aria-label="Saka-Levo home">
+          <svg class="home-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.2 3 10.4v10.4h6.2v-6.1h5.6v6.1H21V10.4L12 3.2z"/></svg>
+          <span class="logo-text">SL</span>
+                </span>
+                <h1>Saka-Levo</h1>
+            </div>
+            <div class="nav-actions">
+                <button class="icon-btn" type="button" aria-label="Search" title="Search">&#128269;</button>
+                <button class="profile-chip" id="profileBtn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="View Warden Profile &amp; Bio" title="Click to view Profile &amp; Bio">
+          <span class="avatar">WD</span>
+          <span>Profile</span>
+        </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container page">
+        <div class="page-header">
+            <div>
+                <h2>Warden Dashboard</h2>
+                <p class="muted">Manage room assignments, availability, and student requests.</p>
+            </div>
+            <form class="search-bar" action="#" method="get" role="search" aria-label="Search students or rooms">
+                <span aria-hidden="true">&#128269;</span>
+                <input type="search" name="q" placeholder="Search by student name, ID, or room number">
+            </form>
+        </div>
+
+        <section class="panel" aria-label="Dashboard overview">
+            <h3>Overview</h3>
+            <div class="stats">
+                <div class="stat">
+                    <div class="label">Total Students</div>
+                    <div class="value">124</div>
+                    <div class="meta">Under this warden's hostel</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Occupied Rooms</div>
+                    <div class="value">38</div>
+                    <div class="meta">Rooms currently occupied</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Available Rooms</div>
+                    <div class="value">7</div>
+                    <div class="meta">Rooms with vacancies</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Pending Requests</div>
+                    <div class="value">5</div>
+                    <div class="meta">Allocation &amp; room change requests</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Maintenance Requests</div>
+                    <div class="value">3</div>
+                    <div class="meta">Reported room problems</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" aria-label="Occupancy overview">
+            <h3>Occupancy Overview</h3>
+            <p class="meta">Summary of hostel occupancy across managed rooms.</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hostel</th>
+                            <th>Total Rooms</th>
+                            <th>Occupied</th>
+                            <th>Available</th>
+                            <th>Occupancy Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mlenga rooms</td>
+                            <td>12</td>
+                            <td>10</td>
+                            <td>2</td>
+                            <td>83%</td>
+                        </tr>
+                        <tr>
+                            <td>Jiga</td>
+                            <td>10</td>
+                            <td>9</td>
+                            <td>1</td>
+                            <td>90%</td>
+                        </tr>
+                        <tr>
+                            <td>Low Budget</td>
+                            <td>8</td>
+                            <td>6</td>
+                            <td>2</td>
+                            <td>75%</td>
+                        </tr>
+                        <tr>
+                            <td>Chigaga</td>
+                            <td>15</td>
+                            <td>13</td>
+                            <td>2</td>
+                            <td>87%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="split">
+            <section class="panel" aria-label="Room lists and availability">
+                <h3>Room Lists and Availability</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Room</th>
+                                <th>Hostel</th>
+                                <th>Type</th>
+                                <th>Capacity</th>
+                                <th>Occupied</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A-101</td>
+                                <td>Mlenga rooms</td>
+                                <td>Double</td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td><span class="status partial">1 Available</span></td>
+                            </tr>
+                            <tr>
+                                <td>A-102</td>
+                                <td>Jiga</td>
+                                <td>Double</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td><span class="status occupied">Occupied</span></td>
+                            </tr>
+                            <tr>
+                                <td>B-201</td>
+                                <td>Low Budget</td>
+                                <td>Single</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td><span class="status available">Available</span></td>
+                            </tr>
+                            <tr>
+                                <td>C-305</td>
+                                <td>Chigaga</td>
+                                <td>Shared (4)</td>
+                                <td>4</td>
+                                <td>3</td>
+                                <td><span class="status partial">1 Available</span></td>
+                            </tr>
+                            <tr>
+                                <td>D-110</td>
+                                <td>Zero Budget</td>
+                                <td>Triple</td>
+                                <td>3</td>
+                                <td>3</td>
+                                <td><span class="status occupied">Occupied</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel" aria-label="Pending requests">
+                <h3>Pending Requests</h3>
+                <p class="meta">Room allocation and room change requests awaiting action.</p>
+                <ul class="list">
+                    <li>
+                        <div>
+                            <strong>Mary Achieng</strong>
+                            <div class="meta">Room change: C-305 to A-101</div>
+                        </div>
+                        <span class="status pending">Pending</span>
+                    </li>
+                    <li>
+                        <div>
+                            <strong>John Otieno</strong>
+                            <div class="meta">Room allocation request (new student)</div>
+                        </div>
+                        <span class="status pending">Pending</span>
+                    </li>
+                    <li>
+                        <div>
+                            <strong>Grace Njeri</strong>
+                            <div class="meta">Room change: transfer to female hostel</div>
+                        </div>
+                        <span class="status pending">Pending</span>
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="split">
+            <section class="panel" aria-label="Maintenance requests">
+                <h3>Maintenance Requests</h3>
+                <p class="meta">Reported room problems.</p>
+                <ul class="list">
+                    <li>
+                        <div>
+                            <strong>Peter Mwangi &mdash; B-201</strong>
+                            <div class="meta">Leaking tap in bathroom</div>
+                        </div>
+                        <span class="status partial">Review</span>
+                    </li>
+                    <li>
+                        <div>
+                            <strong>Lucy Wambui &mdash; C-305</strong>
+                            <div class="meta">Broken window latch</div>
+                        </div>
+                        <span class="status pending">Pending</span>
+                    </li>
+                    <li>
+                        <div>
+                            <strong>Brian Kimani &mdash; A-102</strong>
+                            <div class="meta">Faulty light fixture</div>
+                        </div>
+                        <span class="status pending">Pending</span>
+                    </li>
+                </ul>
+            </section>
+
+
+        </div>
+    </main>
+
+    <!-- Warden Profile & Bio Modal (Shown only when Profile is clicked) -->
+    <div id="profileModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle" hidden>
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-profile-header">
+                    <span class="avatar avatar-lg">WD</span>
+                    <div>
+                        <h3 id="profileModalTitle">Warden Profile &amp; Bio</h3>
+                        <p class="modal-subtitle">Hostel Administrator &bull; Saka-Levo Hostels</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close" id="closeProfileModal" aria-label="Close Profile Bio">&times;</button>
+            </div>
+            <form id="wardenBioForm" action="#" method="post" class="bio-form">
+                <h4 class="form-section-title">Warden Information &amp; Bio</h4>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="warden-name">Full Name</label>
+                        <input type="text" id="warden-name" name="warden-name" value="Davis Mwamba" placeholder="Enter full name">
+                    </div>
+                    <div class="field">
+                        <label for="warden-phone">Phone Number</label>
+                        <input type="tel" id="warden-phone" name="warden-phone" value="+265 888 123 456" placeholder="e.g. +265 700 000 000">
+                    </div>
+                    <div class="field">
+                        <label for="warden-email">Email</label>
+                        <input type="email" id="warden-email" name="warden-email" value="warden@saka-levo.edu" placeholder="warden@school.edu">
+                    </div>
+                    <div class="field">
+                        <label for="warden-hostel">Assigned Hostel</label>
+                        <input type="text" id="warden-hostel" name="warden-hostel" value="Mlenga, Jiga &amp; Chigaga Blocks" placeholder="Hostel name">
+                    </div>
+
+                </div>
+                <div class="btn-row modal-actions">
+                    <button type="submit" class="btn btn-primary">Save Bio</button>
+                    <button type="button" class="btn btn-secondary" id="closeProfileModalBtn">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const profileBtn = document.getElementById('profileBtn');
+        const profileModal = document.getElementById('profileModal');
+        const closeProfileModal = document.getElementById('closeProfileModal');
+        const closeProfileModalBtn = document.getElementById('closeProfileModalBtn');
+        const bioForm = document.getElementById('wardenBioForm');
+
+        function openBioModal() {
+            profileModal.removeAttribute('hidden');
+            profileBtn.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+            closeProfileModal.focus();
+        }
+
+        function closeBioModal() {
+            profileModal.setAttribute('hidden', '');
+            profileBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            profileBtn.focus();
+        }
+
+        profileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openBioModal();
+        });
+
+        closeProfileModal.addEventListener('click', closeBioModal);
+        if (closeProfileModalBtn) {
+            closeProfileModalBtn.addEventListener('click', closeBioModal);
+        }
+
+        profileModal.addEventListener('click', (e) => {
+            if (e.target === profileModal) {
+                closeBioModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !profileModal.hasAttribute('hidden')) {
+                closeBioModal();
+            }
+        });
+
+        if (bioForm) {
+            bioForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Warden bio updated successfully!');
+                closeBioModal();
+            });
+        }
+    </script>
+</body>
+
+</html>
